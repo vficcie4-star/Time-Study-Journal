@@ -18,9 +18,8 @@
             </div>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Action Buttons - Only Clear History and Export CSV -->
         <div class="action-buttons">
-            <button id="addRowBtn" class="btn btn-primary">+ Add Time</button>
             <button id="clearHistoryBtn" class="btn btn-danger">Clear History</button>
             <button id="exportCSVBtn" class="btn btn-success">Export CSV</button>
         </div>
@@ -48,6 +47,14 @@
                 <tbody id="tableBody">
                     <!-- Rows will be added here -->
                 </tbody>
+                <!-- Footer with Add Time button -->
+                <tfoot id="tableFooter">
+                    <tr>
+                        <td colspan="13" style="padding: 10px;">
+                            <button id="addRowBtn" class="btn btn-primary add-bottom-btn">+ Add Time</button>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
