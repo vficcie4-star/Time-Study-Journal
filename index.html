@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Journal & Stop Watch</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196F3">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header with Time and Date -->
+        <div class="header">
+            <div class="time-date-container">
+                <div id="currentTime" class="current-time">00:00:00</div>
+                <div id="currentDate" class="current-date">01-JAN-2026</div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button id="addRowBtn" class="btn btn-primary">+ Add Time</button>
+            <button id="clearHistoryBtn" class="btn btn-danger">Clear History</button>
+            <button id="exportCSVBtn" class="btn btn-success">Export CSV</button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container">
+            <table id="journalTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Product</th>
+                        <th>SKU</th>
+                        <th>Section</th>
+                        <th>Process</th>
+                        <th>Oprt</th>
+                        <th>MTE</th>
+                        <th>Work Unit</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Paused Time</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

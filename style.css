@@ -1,0 +1,352 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-container {
+    max-width: 100vw;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.time-date-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.current-time {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.current-date {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 12px 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: #2196F3;
+}
+
+.btn-danger {
+    background: #f44336;
+}
+
+.btn-success {
+    background: #4CAF50;
+}
+
+.btn-warning {
+    background: #FF9800;
+}
+
+.btn-info {
+    background: #00BCD4;
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+    min-width: auto;
+}
+
+/* Table Styles */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    -webkit-overflow-scrolling: touch;
+}
+
+#journalTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    min-width: 900px;
+}
+
+#journalTable thead {
+    background: #1976D2;
+    color: white;
+}
+
+#journalTable th {
+    padding: 10px 6px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    font-size: 0.65rem;
+}
+
+#journalTable td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+#journalTable tbody tr:hover {
+    background: #f5f5f5;
+}
+
+/* Input Fields */
+.input-field {
+    width: 100%;
+    padding: 6px 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    background: transparent;
+    transition: border-color 0.3s;
+    min-width: 50px;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #2196F3;
+    background: white;
+}
+
+.input-field-sm {
+    padding: 4px 3px;
+    font-size: 0.65rem;
+}
+
+/* Time Display */
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 0.7rem;
+    padding: 4px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Buttons in table */
+.btn-table {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: white;
+    margin: 1px 0;
+    width: 100%;
+}
+
+.btn-table:active {
+    transform: scale(0.9);
+}
+
+.btn-stop {
+    background: #f44336;
+}
+
+.btn-pause {
+    background: #FF9800;
+}
+
+.btn-resume {
+    background: #4CAF50;
+}
+
+.btn-delete {
+    background: #9E9E9E;
+}
+
+/* Delete button */
+.delete-btn {
+    background: #9E9E9E;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin: 0 auto;
+}
+
+.delete-btn:active {
+    transform: scale(0.8);
+    background: #f44336;
+}
+
+/* Paused Time Display */
+.paused-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 0.65rem;
+    text-align: center;
+    background: #FFF3E0;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 5px;
+    }
+
+    .current-time {
+        font-size: 2rem;
+    }
+
+    .action-buttons {
+        gap: 5px;
+    }
+
+    .btn {
+        font-size: 0.7rem;
+        padding: 10px 5px;
+        min-width: 60px;
+    }
+
+    #journalTable {
+        font-size: 0.65rem;
+        min-width: 700px;
+    }
+
+    #journalTable th {
+        font-size: 0.55rem;
+        padding: 6px 3px;
+    }
+
+    #journalTable td {
+        padding: 4px 2px;
+    }
+
+    .input-field {
+        font-size: 0.6rem;
+        padding: 4px 2px;
+        min-width: 40px;
+    }
+
+    .time-display {
+        font-size: 0.6rem;
+    }
+
+    .btn-table {
+        font-size: 0.5rem;
+        padding: 3px 5px;
+    }
+
+    .delete-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6rem;
+    }
+
+    .paused-display {
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .current-time {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        font-size: 0.6rem;
+        padding: 8px 4px;
+        min-width: 50px;
+    }
+
+    #journalTable {
+        font-size: 0.55rem;
+        min-width: 600px;
+    }
+
+    #journalTable th {
+        font-size: 0.5rem;
+        padding: 4px 2px;
+    }
+
+    .input-field {
+        font-size: 0.55rem;
+        padding: 3px 2px;
+        min-width: 35px;
+    }
+}
+
+/* Scrollbar Styling */
+.table-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
