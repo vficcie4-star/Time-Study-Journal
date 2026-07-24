@@ -3,7 +3,7 @@ let rowCounter = 0;
 let rows = [];
 let pausedTimers = {};
 let currentTimeInterval = null;
-let currentRemarksRowId = null;
+let modalContext = null; // Store which field is being edited
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,6 +18,27 @@ function setupEventListeners() {
     document.getElementById('addRowBtn').addEventListener('click', addNewRow);
     document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
     document.getElementById('exportCSVBtn').addEventListener('click', exportCSV);
+    
+    // Modal event listeners
+    document.getElementById('modalCancelBtn').addEventListener('click', closeModal);
+    document.getElementById('modalDoneBtn').addEventListener('click', saveModalText);
+    
+    // Close modal on backdrop click
+    document.getElementById('textModal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+            closeModal();
+        }
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.getElementById('textModal').classList.contains('active')) {
+            closeModal();
+        }
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && document.getElementById('textModal').classList.contains('active')) {
+            saveModalText();
+        }
+    });
 }
 
 // Update current time and date
@@ -65,6 +86,9 @@ function addNewRow() {
     rows.push(rowData);
     renderRow(rowData);
     saveData();
+    
+    // Auto-set start time
+    setTimeout(() => updateStartTime(rowId), 100);
 }
 
 // Render a single row
@@ -98,10 +122,17 @@ function renderRow(data) {
     tdSection.appendChild(sectionInput);
     tr.appendChild(tdSection);
     
-    // Process
+    // Process - Clickable to open modal
     const tdProcess = document.createElement('td');
-    const processInput = createInput('process', data.process, data.id);
-    tdProcess.appendChild(processInput);
+    const processDiv = document.createElement('div');
+    processDiv.className = 'input-field input-clickable';
+    processDiv.textContent = data.process || 'Click to add process...';
+    processDiv.style.overflow = 'hidden';
+    processDiv.style.textOverflow = 'ellipsis';
+    processDiv.style.whiteSpace = 'nowrap';
+    processDiv.style.maxWidth = '120px';
+    processDiv.onclick = () => openModal('process', data.id, data.process);
+    tdProcess.appendChild(processDiv);
     tr.appendChild(tdProcess);
     
     // Oprt
@@ -173,16 +204,16 @@ function renderRow(data) {
     tdPaused.appendChild(pausedDisplay);
     tr.appendChild(tdPaused);
     
-    // Remarks - Now clickable
+    // Remarks - Clickable to open modal
     const tdRemarks = document.createElement('td');
     const remarksDiv = document.createElement('div');
-    remarksDiv.className = 'remarks-field';
-    remarksDiv.id = `remarksDisplay-${data.id}`;
+    remarksDiv.className = 'input-field input-clickable';
     remarksDiv.textContent = data.remarks || 'Click to add remarks...';
-    if (data.remarks) {
-        remarksDiv.classList.add('has-text');
-    }
-    remarksDiv.onclick = () => openRemarksModal(data.id);
+    remarksDiv.style.overflow = 'hidden';
+    remarksDiv.style.textOverflow = 'ellipsis';
+    remarksDiv.style.whiteSpace = 'nowrap';
+    remarksDiv.style.maxWidth = '120px';
+    remarksDiv.onclick = () => openModal('remarks', data.id, data.remarks);
     tdRemarks.appendChild(remarksDiv);
     tr.appendChild(tdRemarks);
     
@@ -203,7 +234,7 @@ function renderRow(data) {
     }
 }
 
-// Create input field
+// Create input field (for short text inputs)
 function createInput(field, value, rowId) {
     const input = document.createElement('input');
     input.type = 'text';
@@ -227,69 +258,97 @@ function updateRowData(rowId, field, value) {
     }
 }
 
-// Update remarks display
-function updateRemarksDisplay(rowId) {
-    const row = rows.find(r => r.id === rowId);
-    if (!row) return;
+// Open modal for text input
+function openModal(field, rowId, currentValue) {
+    modalContext = { field, rowId };
+    const modal = document.getElementById('textModal');
+    const textarea = document.getElementById('modalTextArea');
+    const title = document.getElementById('modalTitle');
     
-    const display = document.getElementById(`remarksDisplay-${rowId}`);
-    if (display) {
-        display.textContent = row.remarks || 'Click to add remarks...';
-        if (row.remarks) {
-            display.classList.add('has-text');
-        } else {
-            display.classList.remove('has-text');
+    // Set title
+    const fieldNames = {
+        'remarks': 'Remarks',
+        'product': 'Product',
+        'sku': 'SKU',
+        'section': 'Section',
+        'process': 'Process',
+        'oprt': 'Oprt',
+        'mte': 'MTE',
+        'workUnit': 'Work Unit'
+    };
+    title.textContent = `Edit ${fieldNames[field] || field}`;
+    
+    // Set value
+    textarea.value = currentValue || '';
+    
+    // Focus and select text
+    setTimeout(() => {
+        textarea.focus();
+        textarea.select();
+    }, 100);
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close modal
+function closeModal() {
+    const modal = document.getElementById('textModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    modalContext = null;
+}
+
+// Save modal text
+function saveModalText() {
+    if (!modalContext) return;
+    
+    const textarea = document.getElementById('modalTextArea');
+    const value = textarea.value;
+    const { field, rowId } = modalContext;
+    
+    // Update data
+    updateRowData(rowId, field, value);
+    
+    // Update display in table
+    const row = rows.find(r => r.id === rowId);
+    if (row) {
+        const rowElement = document.getElementById(`row-${rowId}`);
+        if (rowElement) {
+            // Find the correct cell based on field
+            const cells = rowElement.querySelectorAll('td');
+            const fieldIndex = {
+                'product': 1,
+                'sku': 2,
+                'section': 3,
+                'process': 4,
+                'oprt': 5,
+                'mte': 6,
+                'workUnit': 7,
+                'remarks': 11
+            };
+            
+            const index = fieldIndex[field];
+            if (index !== undefined && cells[index]) {
+                // Check if it's a clickable div (process or remarks) or input field
+                const clickableDiv = cells[index].querySelector('.input-clickable');
+                if (clickableDiv) {
+                    // For Process and Remarks fields
+                    const placeholder = field === 'process' ? 'Click to add process...' : 'Click to add remarks...';
+                    clickableDiv.textContent = value || placeholder;
+                } else {
+                    // For regular input fields
+                    const input = cells[index].querySelector('.input-field');
+                    if (input) {
+                        input.value = value;
+                    }
+                }
+            }
         }
     }
+    
+    closeModal();
 }
-
-// Open remarks modal
-function openRemarksModal(rowId) {
-    const row = rows.find(r => r.id === rowId);
-    if (!row) return;
-    
-    currentRemarksRowId = rowId;
-    const textarea = document.getElementById('remarksTextarea');
-    textarea.value = row.remarks || '';
-    document.getElementById('remarksModal').style.display = 'block';
-    
-    // Focus textarea after a small delay
-    setTimeout(() => textarea.focus(), 100);
-}
-
-// Close remarks modal
-function closeRemarksModal() {
-    document.getElementById('remarksModal').style.display = 'none';
-    currentRemarksRowId = null;
-}
-
-// Save remarks
-function saveRemarks() {
-    if (currentRemarksRowId === null) return;
-    
-    const textarea = document.getElementById('remarksTextarea');
-    const remarks = textarea.value.trim();
-    
-    updateRowData(currentRemarksRowId, 'remarks', remarks);
-    updateRemarksDisplay(currentRemarksRowId);
-    
-    closeRemarksModal();
-}
-
-// Close modal when clicking outside
-document.addEventListener('click', (event) => {
-    const modal = document.getElementById('remarksModal');
-    if (event.target === modal) {
-        closeRemarksModal();
-    }
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-        closeRemarksModal();
-    }
-});
 
 // Stop timer
 function stopTimer(rowId) {
@@ -338,7 +397,8 @@ function togglePause(rowId) {
     const row = rows.find(r => r.id === rowId);
     if (!row || row.isStopped) return;
     
-    const pauseBtn = document.querySelector(`#row-${rowId} .btn-table.btn-pause, #row-${rowId} .btn-table.btn-resume`);
+    const rowElement = document.getElementById(`row-${rowId}`);
+    const pauseBtn = rowElement.querySelector('.btn-table.btn-pause, .btn-table.btn-resume');
     
     if (row.isPaused) {
         // Resume
@@ -416,6 +476,8 @@ function deleteRow(rowId) {
 function renumberRows() {
     const tbody = document.getElementById('tableBody');
     const rowElements = tbody.querySelectorAll('tr');
+    const sortedRows = rows.sort((a, b) => a.id - b.id);
+    
     rowElements.forEach((row, index) => {
         const tdNo = row.querySelector('td:first-child');
         if (tdNo) {
@@ -462,23 +524,23 @@ function exportCSV() {
     rows.forEach(row => {
         const rowData = [
             row.id,
-            `"${row.product || ''}"`,
-            `"${row.sku || ''}"`,
-            `"${row.section || ''}"`,
-            `"${row.process || ''}"`,
-            `"${row.oprt || ''}"`,
-            `"${row.mte || ''}"`,
-            `"${row.workUnit || ''}"`,
+            `"${(row.product || '').replace(/"/g, '""')}"`,
+            `"${(row.sku || '').replace(/"/g, '""')}"`,
+            `"${(row.section || '').replace(/"/g, '""')}"`,
+            `"${(row.process || '').replace(/"/g, '""')}"`,
+            `"${(row.oprt || '').replace(/"/g, '""')}"`,
+            `"${(row.mte || '').replace(/"/g, '""')}"`,
+            `"${(row.workUnit || '').replace(/"/g, '""')}"`,
             `"${row.startTime || ''}"`,
             `"${row.endTime || ''}"`,
             `"${formatPausedTime(row.pausedTime || 0)}"`,
-            `"${row.remarks || ''}"`
+            `"${(row.remarks || '').replace(/"/g, '""')}"`
         ];
         csvRows.push(rowData.join(','));
     });
     
     const csvString = csvRows.join('\n');
-    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' }); // Add BOM for Excel
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -541,22 +603,31 @@ function updateStartTime(rowId) {
             second: '2-digit' 
         });
         row.startTime = timeStr;
-        document.getElementById(`startTime-${rowId}`).textContent = timeStr;
+        const display = document.getElementById(`startTime-${rowId}`);
+        if (display) {
+            display.textContent = timeStr;
+        }
         saveData();
     }
 }
 
-// Override addNewRow to set start time
-const originalAddNewRow = addNewRow;
-addNewRow = function() {
-    originalAddNewRow();
-    const lastRow = rows[rows.length - 1];
-    if (lastRow) {
-        setTimeout(() => updateStartTime(lastRow.id), 100);
-    }
-};
-
 // Auto-save on page unload
 window.addEventListener('beforeunload', () => {
     saveData();
+});
+
+// Handle visibility change to keep timers accurate
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        // Page is hidden, save data
+        saveData();
+    } else {
+        // Page is visible again, update timers
+        rows.forEach(row => {
+            if (row.isPaused && !row.isStopped && row.pauseStartTime) {
+                // Restart pause timer if needed
+                startPauseTimer(row.id);
+            }
+        });
+    }
 });
