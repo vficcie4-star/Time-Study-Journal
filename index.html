@@ -50,21 +50,20 @@
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <!-- Modal for expanded remarks -->
-        <div id="remarksModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Remarks</h3>
-                    <button class="modal-close" onclick="closeRemarksModal()">&times;</button>
+    <!-- Modal for text input -->
+    <div id="textModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Enter Text</h3>
+                <div class="modal-actions">
+                    <button id="modalCancelBtn" class="btn btn-danger btn-sm">Cancel</button>
+                    <button id="modalDoneBtn" class="btn btn-primary btn-sm">Done</button>
                 </div>
-                <div class="modal-body">
-                    <textarea id="remarksTextarea" placeholder="Enter your remarks here..."></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" onclick="saveRemarks()">Save</button>
-                    <button class="btn btn-danger" onclick="closeRemarksModal()">Cancel</button>
-                </div>
+            </div>
+            <div class="modal-body">
+                <textarea id="modalTextArea" rows="8" placeholder="Type here..."></textarea>
             </div>
         </div>
     </div>
