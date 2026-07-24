@@ -3,6 +3,7 @@ let rowCounter = 0;
 let rows = [];
 let pausedTimers = {};
 let currentTimeInterval = null;
+let currentRemarksRowId = null;
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -172,10 +173,17 @@ function renderRow(data) {
     tdPaused.appendChild(pausedDisplay);
     tr.appendChild(tdPaused);
     
-    // Remarks
+    // Remarks - Now clickable
     const tdRemarks = document.createElement('td');
-    const remarksInput = createInput('remarks', data.remarks, data.id);
-    tdRemarks.appendChild(remarksInput);
+    const remarksDiv = document.createElement('div');
+    remarksDiv.className = 'remarks-field';
+    remarksDiv.id = `remarksDisplay-${data.id}`;
+    remarksDiv.textContent = data.remarks || 'Click to add remarks...';
+    if (data.remarks) {
+        remarksDiv.classList.add('has-text');
+    }
+    remarksDiv.onclick = () => openRemarksModal(data.id);
+    tdRemarks.appendChild(remarksDiv);
     tr.appendChild(tdRemarks);
     
     // Action
@@ -218,6 +226,70 @@ function updateRowData(rowId, field, value) {
         saveData();
     }
 }
+
+// Update remarks display
+function updateRemarksDisplay(rowId) {
+    const row = rows.find(r => r.id === rowId);
+    if (!row) return;
+    
+    const display = document.getElementById(`remarksDisplay-${rowId}`);
+    if (display) {
+        display.textContent = row.remarks || 'Click to add remarks...';
+        if (row.remarks) {
+            display.classList.add('has-text');
+        } else {
+            display.classList.remove('has-text');
+        }
+    }
+}
+
+// Open remarks modal
+function openRemarksModal(rowId) {
+    const row = rows.find(r => r.id === rowId);
+    if (!row) return;
+    
+    currentRemarksRowId = rowId;
+    const textarea = document.getElementById('remarksTextarea');
+    textarea.value = row.remarks || '';
+    document.getElementById('remarksModal').style.display = 'block';
+    
+    // Focus textarea after a small delay
+    setTimeout(() => textarea.focus(), 100);
+}
+
+// Close remarks modal
+function closeRemarksModal() {
+    document.getElementById('remarksModal').style.display = 'none';
+    currentRemarksRowId = null;
+}
+
+// Save remarks
+function saveRemarks() {
+    if (currentRemarksRowId === null) return;
+    
+    const textarea = document.getElementById('remarksTextarea');
+    const remarks = textarea.value.trim();
+    
+    updateRowData(currentRemarksRowId, 'remarks', remarks);
+    updateRemarksDisplay(currentRemarksRowId);
+    
+    closeRemarksModal();
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (event) => {
+    const modal = document.getElementById('remarksModal');
+    if (event.target === modal) {
+        closeRemarksModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        closeRemarksModal();
+    }
+});
 
 // Stop timer
 function stopTimer(rowId) {
