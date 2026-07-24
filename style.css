@@ -166,6 +166,41 @@ body {
     font-size: 0.65rem;
 }
 
+/* Remarks Field */
+.remarks-field {
+    width: 100%;
+    padding: 6px 4px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    background: transparent;
+    transition: border-color 0.3s;
+    min-width: 50px;
+    cursor: pointer;
+    min-height: 30px;
+    max-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.remarks-field:focus {
+    outline: none;
+    border-color: #2196F3;
+    background: white;
+}
+
+.remarks-field:active {
+    background: #f0f0f0;
+}
+
+.remarks-field.has-text {
+    background: #e3f2fd;
+    border-color: #2196F3;
+}
+
 /* Time Display */
 .time-display {
     font-family: 'Courier New', monospace;
@@ -244,6 +279,112 @@ body {
     border-radius: 4px;
 }
 
+/* Modal for Remarks */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 0;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: slideIn 0.3s;
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: transform 0.2s;
+}
+
+.modal-close:hover {
+    transform: scale(1.2);
+}
+
+.modal-body {
+    padding: 24px;
+}
+
+#remarksTextarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+#remarksTextarea:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-footer .btn {
+    flex: 0 1 auto;
+    min-width: 80px;
+    padding: 10px 20px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .app-container {
@@ -284,6 +425,13 @@ body {
         min-width: 40px;
     }
 
+    .remarks-field {
+        font-size: 0.6rem;
+        padding: 4px 2px;
+        min-height: 25px;
+        max-height: 25px;
+    }
+
     .time-display {
         font-size: 0.6rem;
     }
@@ -301,6 +449,24 @@ body {
 
     .paused-display {
         font-size: 0.55rem;
+    }
+
+    .modal-content {
+        margin: 5% auto;
+        width: 95%;
+    }
+
+    .modal-body {
+        padding: 16px;
+    }
+
+    #remarksTextarea {
+        min-height: 150px;
+        font-size: 0.9rem;
+    }
+
+    .modal-header h3 {
+        font-size: 1rem;
     }
 }
 
@@ -330,6 +496,30 @@ body {
         padding: 3px 2px;
         min-width: 35px;
     }
+
+    .remarks-field {
+        font-size: 0.55rem;
+        padding: 3px 2px;
+        min-height: 22px;
+        max-height: 22px;
+    }
+
+    .modal-content {
+        margin: 2% auto;
+        width: 98%;
+    }
+
+    #remarksTextarea {
+        min-height: 120px;
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    .modal-footer .btn {
+        min-width: 60px;
+        padding: 8px 16px;
+        font-size: 0.7rem;
+    }
 }
 
 /* Scrollbar Styling */
@@ -348,5 +538,24 @@ body {
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Modal scrollbar */
+#remarksTextarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+#remarksTextarea::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#remarksTextarea::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+#remarksTextarea::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
