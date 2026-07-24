@@ -519,3 +519,50 @@ body {
     background: #888;
     border-radius: 3px;
 }
+/* Enhanced clickable fields */
+.input-clickable {
+    cursor: pointer;
+    background: #fafafa;
+    padding: 6px 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    min-height: 30px;
+    transition: all 0.3s ease;
+    font-size: 0.7rem;
+    color: #333;
+}
+
+.input-clickable:hover {
+    background: #f0f7ff;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.input-clickable:active {
+    background: #e3f2fd;
+    transform: scale(0.98);
+}
+
+.input-clickable.has-value {
+    background: #f5f5f5;
+    border-color: #bbb;
+    font-weight: 500;
+}
+
+/* Empty state styling */
+.input-clickable:empty::before,
+.input-clickable:not(:has(text)):empty::before {
+    content: attr(data-placeholder);
+    color: #999;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Mobile optimization for clickable fields */
+@media (max-width: 768px) {
+    .input-clickable {
+        padding: 8px 6px;
+        font-size: 0.65rem;
+        min-height: 36px;
+    }
+}
