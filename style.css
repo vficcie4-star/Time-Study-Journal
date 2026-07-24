@@ -566,3 +566,77 @@ body {
         min-height: 36px;
     }
 }
+/* Add button at bottom of table */
+.add-bottom-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.add-bottom-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+.add-bottom-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+/* Table footer styling */
+#tableFooter {
+    background: #f8f9fa;
+}
+
+#tableFooter td {
+    padding: 10px !important;
+    border-top: 2px solid #e0e0e0;
+}
+
+/* Sticky footer for better UX on mobile */
+@media (max-width: 768px) {
+    .add-bottom-btn {
+        padding: 16px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+    
+    #tableFooter td {
+        padding: 8px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .add-bottom-btn {
+        padding: 14px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Remove the old action-buttons styling for add button since it's moved */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+/* Adjust action buttons for mobile */
+@media (max-width: 768px) {
+    .action-buttons .btn {
+        flex: 1;
+        min-width: 60px;
+        padding: 10px 5px;
+        font-size: 0.7rem;
+    }
+}
