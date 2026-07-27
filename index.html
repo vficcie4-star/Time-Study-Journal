@@ -20,8 +20,8 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button id="clearHistoryBtn" class="btn btn-danger">Clear History</button>
-            <button id="exportCSVBtn" class="btn btn-success">Export CSV</button>
+            <button id="clearHistoryBtn" class="btn btn-danger">🗑 Clear</button>
+            <button id="exportCSVBtn" class="btn btn-success">📊 Export</button>
         </div>
 
         <!-- Table Container -->
@@ -29,16 +29,16 @@
             <table id="journalTable">
                 <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Product</th>
-                        <th>SKU</th>
-                        <th>Section</th>
-                        <th>Process</th>
-                        <th>Oprt</th>
-                        <th>MTE</th>
-                        <th>Work Unit</th>
-                        <th>Remarks</th>
-                        <th>Action</th>
+                        <th style="min-width: 35px;">#</th>
+                        <th style="min-width: 60px;">Product</th>
+                        <th style="min-width: 50px;">SKU</th>
+                        <th style="min-width: 60px;">Section</th>
+                        <th style="min-width: 70px;">Process</th>
+                        <th style="min-width: 45px;">Oprt</th>
+                        <th style="min-width: 50px;">MTE</th>
+                        <th style="min-width: 65px;">Work Unit</th>
+                        <th style="min-width: 70px;">Remarks</th>
+                        <th style="min-width: 35px;"></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -47,8 +47,8 @@
                 <!-- Footer with Add Time button -->
                 <tfoot id="tableFooter">
                     <tr>
-                        <td colspan="10" style="padding: 10px;">
-                            <button id="addRowBtn" class="btn btn-primary add-bottom-btn">+ Add Time</button>
+                        <td colspan="10" style="padding: 12px;">
+                            <button id="addRowBtn" class="btn btn-primary add-bottom-btn">➕ Add Time</button>
                         </td>
                     </tr>
                 </tfoot>
