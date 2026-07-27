@@ -23,7 +23,7 @@ body {
 .header {
     background: linear-gradient(135deg, #2196F3, #1976D2);
     color: white;
-    padding: 20px 15px;
+    padding: 15px;
     border-radius: 12px;
     margin-bottom: 15px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
@@ -37,14 +37,14 @@ body {
 }
 
 .current-time {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .current-date {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     opacity: 0.9;
 }
@@ -52,18 +52,18 @@ body {
 /* Action Buttons */
 .action-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-bottom: 15px;
     flex-wrap: wrap;
 }
 
 .btn {
     flex: 1;
-    min-width: 100px;
-    padding: 14px 10px;
+    min-width: 80px;
+    padding: 12px 8px;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -88,17 +88,9 @@ body {
     background: #4CAF50;
 }
 
-.btn-warning {
-    background: #FF9800;
-}
-
-.btn-info {
-    background: #00BCD4;
-}
-
 .btn-sm {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+    padding: 8px 16px;
+    font-size: 0.8rem;
     min-width: auto;
     flex: none;
 }
@@ -115,8 +107,8 @@ body {
 #journalTable {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
-    min-width: 700px;
+    font-size: 0.8rem;
+    min-width: 600px;
 }
 
 #journalTable thead {
@@ -125,14 +117,14 @@ body {
 }
 
 #journalTable th {
-    padding: 12px 8px;
+    padding: 10px 8px;
     text-align: left;
     font-weight: 600;
     white-space: nowrap;
     position: sticky;
     top: 0;
     z-index: 10;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
 }
 
 #journalTable td {
@@ -141,134 +133,88 @@ body {
     vertical-align: middle;
 }
 
-/* Entry row styling */
-.entry-row {
-    background: white;
+#journalTable tbody tr:hover {
+    background: #f5f5f5;
 }
 
-.entry-row td {
-    padding: 8px 6px;
-    border-bottom: none;
-}
-
-.time-row {
-    background: #f8f9fa;
-}
-
-.time-row td {
-    padding: 8px 6px;
-    border-bottom: 2px solid #e0e0e0;
-}
-
-.entry-group {
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 4px;
-}
-
-/* Input Fields */
-.input-field {
-    width: 100%;
-    padding: 8px 6px;
-    border: 1.5px solid #ddd;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    background: transparent;
-    transition: all 0.3s;
-    min-width: 60px;
-    min-height: 36px;
-}
-
-.input-field:focus {
-    outline: none;
-    border-color: #2196F3;
-    background: white;
-}
-
-.input-clickable {
+/* Clickable Product Cell */
+.product-cell {
     cursor: pointer;
-    background: #fafafa;
-    padding: 8px 8px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 6px;
-    min-height: 36px;
+    color: #1976D2;
+    font-weight: 500;
+    padding: 6px 8px;
+    border-radius: 4px;
     transition: all 0.3s ease;
-    font-size: 0.85rem;
-    color: #333;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 120px;
+    min-height: 30px;
     display: flex;
     align-items: center;
 }
 
-.input-clickable:hover {
-    background: #f0f7ff;
-    border-color: #2196F3;
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+.product-cell:hover {
+    background: #e3f2fd;
+    text-decoration: underline;
 }
 
-.input-clickable:active {
-    background: #e3f2fd;
+.product-cell:active {
+    background: #bbdefb;
     transform: scale(0.98);
+}
+
+.product-cell.has-value {
+    font-weight: 600;
+}
+
+.product-cell.empty {
+    color: #999;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* Process Cell */
+.process-cell {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.process-cell:hover {
+    background: #f5f5f5;
+}
+
+.process-cell:active {
+    background: #e8e8e8;
 }
 
 /* Time Display */
 .time-display {
     font-family: 'Courier New', monospace;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 4px 6px;
     background: #f5f5f5;
-    border-radius: 6px;
+    border-radius: 4px;
     white-space: nowrap;
-    text-align: center;
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 80px;
-}
-
-.time-container {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.time-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    min-width: 80px;
-}
-
-.time-label {
-    font-size: 0.6rem;
-    color: #666;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    display: inline-block;
+    min-width: 70px;
 }
 
 /* Buttons in table */
 .btn-table {
-    padding: 6px 10px;
+    padding: 4px 10px;
     border: none;
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 700;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     color: white;
-    margin: 2px 0;
-    width: 100%;
-    min-width: 55px;
-    min-height: 32px;
+    margin: 1px 2px;
+    min-width: 50px;
 }
 
 .btn-table:active {
@@ -297,15 +243,14 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
-    margin: 0 auto;
 }
 
 .delete-btn:active {
@@ -316,53 +261,14 @@ body {
 /* Paused Time Display */
 .paused-display {
     font-family: 'Courier New', monospace;
-    font-weight: 700;
-    font-size: 0.8rem;
+    font-weight: 600;
+    font-size: 0.7rem;
     text-align: center;
     background: #FFF3E0;
-    padding: 6px 8px;
-    border-radius: 6px;
-    min-width: 70px;
-    min-height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Add button at bottom of table */
-.add-bottom-btn {
-    width: 100%;
-    padding: 18px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #2196F3, #1976D2);
-    border: none;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
-    min-height: 56px;
-}
-
-.add-bottom-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-}
-
-.add-bottom-btn:active {
-    transform: scale(0.98);
-}
-
-#tableFooter {
-    background: #f8f9fa;
-}
-
-#tableFooter td {
-    padding: 12px !important;
-    border-top: 2px solid #e0e0e0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    min-width: 60px;
 }
 
 /* Modal Styles */
@@ -399,7 +305,7 @@ body {
 }
 
 .modal-header {
-    padding: 24px 24px 16px;
+    padding: 20px 24px 16px;
     border-bottom: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-between;
@@ -409,7 +315,7 @@ body {
 }
 
 .modal-header h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: #333;
     margin: 0;
@@ -417,7 +323,7 @@ body {
 
 .modal-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .modal-body {
@@ -426,22 +332,86 @@ body {
     overflow-y: auto;
 }
 
-#modalTextArea {
+/* Form Groups */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.modal-input {
     width: 100%;
-    padding: 14px;
+    padding: 10px 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    transition: border-color 0.3s;
+    font-family: inherit;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: #2196F3;
+}
+
+.modal-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95rem;
     font-family: inherit;
     resize: vertical;
     transition: border-color 0.3s;
-    min-height: 180px;
+    min-height: 60px;
     line-height: 1.6;
 }
 
-#modalTextArea:focus {
+.modal-textarea:focus {
     outline: none;
     border-color: #2196F3;
+}
+
+/* Add button at bottom of table */
+.add-bottom-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.add-bottom-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+.add-bottom-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+#tableFooter {
+    background: #f8f9fa;
+}
+
+#tableFooter td {
+    padding: 10px !important;
+    border-top: 2px solid #e0e0e0;
 }
 
 /* Animations */
@@ -461,111 +431,77 @@ body {
     }
 }
 
-/* Mobile Responsive - Optimized for portrait */
+/* Responsive Design */
 @media (max-width: 768px) {
     .app-container {
-        padding: 8px;
-        padding-bottom: 70px;
+        padding: 5px;
+        padding-bottom: 60px;
     }
 
     .current-time {
-        font-size: 2.8rem;
-    }
-    
-    .current-date {
-        font-size: 1rem;
-    }
-
-    .header {
-        padding: 15px;
+        font-size: 2rem;
     }
 
     .action-buttons {
-        gap: 8px;
+        gap: 5px;
     }
 
     .btn {
-        font-size: 0.85rem;
-        padding: 12px 8px;
-        min-width: 80px;
-        border-radius: 8px;
+        font-size: 0.7rem;
+        padding: 10px 5px;
+        min-width: 60px;
     }
 
     #journalTable {
-        font-size: 0.8rem;
-        min-width: 600px;
+        font-size: 0.7rem;
+        min-width: 500px;
     }
 
     #journalTable th {
-        font-size: 0.7rem;
-        padding: 10px 6px;
+        font-size: 0.6rem;
+        padding: 6px 4px;
     }
 
     #journalTable td {
         padding: 6px 4px;
     }
 
-    .input-field {
-        font-size: 0.75rem;
-        padding: 6px 4px;
-        min-width: 50px;
-        min-height: 32px;
-    }
-
-    .input-clickable {
-        font-size: 0.75rem;
-        padding: 6px 6px;
-        min-height: 32px;
-        max-width: 100px;
-    }
-
     .time-display {
-        font-size: 0.75rem;
-        padding: 5px 6px;
-        min-height: 32px;
-        min-width: 70px;
+        font-size: 0.7rem;
+        min-width: 60px;
+        padding: 3px 4px;
     }
 
     .btn-table {
-        font-size: 0.7rem;
-        padding: 5px 8px;
-        min-width: 45px;
-        min-height: 28px;
+        font-size: 0.55rem;
+        padding: 3px 6px;
+        min-width: 40px;
     }
 
     .delete-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
+        width: 24px;
+        height: 24px;
+        font-size: 0.7rem;
     }
 
     .paused-display {
+        font-size: 0.65rem;
+        min-width: 50px;
+        padding: 3px 6px;
+    }
+
+    .product-cell {
         font-size: 0.7rem;
-        padding: 5px 6px;
-        min-width: 60px;
-        min-height: 32px;
+        padding: 4px 6px;
     }
 
-    .time-item {
-        min-width: 70px;
-    }
-
-    .time-label {
-        font-size: 0.55rem;
-    }
-
-    .time-container {
-        gap: 6px;
-    }
-
-    .add-bottom-btn {
-        padding: 16px;
-        font-size: 1rem;
-        min-height: 50px;
+    .process-cell {
+        font-size: 0.7rem;
+        max-width: 80px;
     }
 
     .modal-content {
-        max-width: 95%;
+        max-width: 100%;
         margin: 10px;
         max-height: 95vh;
     }
@@ -583,161 +519,119 @@ body {
     }
 
     .btn-sm {
-        padding: 8px 14px;
-        font-size: 0.8rem;
-    }
-
-    #modalTextArea {
-        font-size: 1rem;
-        min-height: 150px;
-        padding: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .app-container {
-        padding: 5px;
-        padding-bottom: 60px;
-    }
-
-    .current-time {
-        font-size: 2.4rem;
-    }
-
-    .header {
-        padding: 12px;
-    }
-
-    .btn {
-        font-size: 0.75rem;
-        padding: 10px 6px;
-        min-width: 70px;
-        border-radius: 6px;
-    }
-
-    #journalTable {
-        font-size: 0.7rem;
-        min-width: 500px;
-    }
-
-    #journalTable th {
-        font-size: 0.6rem;
-        padding: 8px 4px;
-    }
-
-    #journalTable td {
-        padding: 5px 3px;
-    }
-
-    .input-field {
-        font-size: 0.65rem;
-        padding: 5px 3px;
-        min-width: 40px;
-        min-height: 28px;
-    }
-
-    .input-clickable {
-        font-size: 0.65rem;
-        padding: 5px 4px;
-        min-height: 28px;
-        max-width: 80px;
-    }
-
-    .time-display {
-        font-size: 0.65rem;
-        padding: 4px 5px;
-        min-height: 28px;
-        min-width: 60px;
-    }
-
-    .btn-table {
-        font-size: 0.6rem;
-        padding: 4px 6px;
-        min-width: 38px;
-        min-height: 24px;
-        border-radius: 4px;
-    }
-
-    .delete-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 0.7rem;
-    }
-
-    .paused-display {
-        font-size: 0.6rem;
-        padding: 4px 5px;
-        min-width: 50px;
-        min-height: 28px;
-    }
-
-    .time-item {
-        min-width: 60px;
-    }
-
-    .time-label {
-        font-size: 0.5rem;
-    }
-
-    .time-container {
-        gap: 4px;
-    }
-
-    .add-bottom-btn {
-        padding: 14px;
-        font-size: 0.85rem;
-        min-height: 44px;
-        border-radius: 8px;
-    }
-
-    .modal-header {
-        padding: 14px 16px 10px;
-    }
-
-    .modal-body {
-        padding: 14px 16px;
-    }
-
-    .modal-header h3 {
-        font-size: 0.9rem;
-    }
-
-    .btn-sm {
         padding: 6px 12px;
         font-size: 0.7rem;
     }
 
-    #modalTextArea {
+    .modal-input, .modal-textarea {
         font-size: 0.9rem;
-        min-height: 120px;
-        padding: 10px;
+        padding: 8px 10px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .add-bottom-btn {
+        padding: 16px;
+        font-size: 0.9rem;
+        border-radius: 8px;
+    }
+    
+    #tableFooter td {
+        padding: 8px !important;
     }
 }
 
-/* Tablet and larger screens */
-@media (min-width: 769px) {
-    #journalTable {
-        min-width: 900px;
+@media (max-width: 480px) {
+    .current-time {
+        font-size: 1.8rem;
     }
-    
-    .input-clickable {
-        max-width: 150px;
+
+    .btn {
+        font-size: 0.6rem;
+        padding: 8px 4px;
+        min-width: 50px;
+    }
+
+    #journalTable {
+        font-size: 0.6rem;
+        min-width: 400px;
+    }
+
+    #journalTable th {
+        font-size: 0.5rem;
+        padding: 4px 3px;
+    }
+
+    #journalTable td {
+        padding: 4px 3px;
+    }
+
+    .time-display {
+        font-size: 0.6rem;
+        min-width: 50px;
+        padding: 2px 3px;
+    }
+
+    .btn-table {
+        font-size: 0.5rem;
+        padding: 2px 4px;
+        min-width: 35px;
+    }
+
+    .delete-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 0.6rem;
+    }
+
+    .product-cell {
+        font-size: 0.6rem;
+        padding: 3px 4px;
+    }
+
+    .process-cell {
+        font-size: 0.6rem;
+        max-width: 60px;
+    }
+
+    .modal-header {
+        padding: 12px 16px 10px;
+    }
+
+    .modal-body {
+        padding: 12px 16px;
+    }
+
+    .modal-input, .modal-textarea {
+        font-size: 0.85rem;
+        padding: 6px 8px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .add-bottom-btn {
+        padding: 14px;
+        font-size: 0.8rem;
     }
 }
 
 /* Scrollbar Styling */
 .table-container::-webkit-scrollbar {
-    height: 8px;
+    height: 6px;
 }
 
 .table-container::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
     background: #888;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
@@ -745,15 +639,23 @@ body {
 }
 
 .modal-body::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .modal-body::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
     background: #888;
-    border-radius: 4px;
+    border-radius: 3px;
+}
+
+/* Action buttons container in table */
+.action-cell {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    align-items: center;
 }
