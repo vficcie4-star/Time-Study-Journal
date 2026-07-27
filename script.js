@@ -89,144 +89,156 @@ function addNewRow() {
     
     // Auto-set start time
     setTimeout(() => updateStartTime(rowId), 100);
+    
+    // Scroll to the new row
+    setTimeout(() => {
+        const newRow = document.getElementById(`entry-${rowId}`);
+        if (newRow) {
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, 200);
 }
 
-// Render a single row
+// Render a single row (2 rows per entry)
 function renderRow(data) {
     const tbody = document.getElementById('tableBody');
-    const tr = document.createElement('tr');
-    tr.id = `row-${data.id}`;
-    tr.dataset.id = data.id;
     
-    // No.
-    const tdNo = document.createElement('td');
-    tdNo.textContent = data.id;
-    tdNo.style.fontWeight = '600';
-    tr.appendChild(tdNo);
+    // Create entry group
+    const entryGroup = document.createElement('tr');
+    entryGroup.className = 'entry-row';
+    entryGroup.id = `entry-${data.id}`;
+    entryGroup.dataset.id = data.id;
     
-    // Product
-    const tdProduct = document.createElement('td');
-    const productInput = createInput('product', data.product, data.id);
-    tdProduct.appendChild(productInput);
-    tr.appendChild(tdProduct);
+    // Row 1: Text fields (No., Product, SKU, Section, Process, Oprt, MTE, Work Unit, Remarks, Action)
+    const fields = [
+        { key: 'no', type: 'text' },
+        { key: 'product', type: 'clickable' },
+        { key: 'sku', type: 'clickable' },
+        { key: 'section', type: 'clickable' },
+        { key: 'process', type: 'clickable' },
+        { key: 'oprt', type: 'clickable' },
+        { key: 'mte', type: 'clickable' },
+        { key: 'workUnit', type: 'clickable' },
+        { key: 'remarks', type: 'clickable' },
+        { key: 'action', type: 'action' }
+    ];
     
-    // SKU
-    const tdSku = document.createElement('td');
-    const skuInput = createInput('sku', data.sku, data.id);
-    tdSku.appendChild(skuInput);
-    tr.appendChild(tdSku);
+    fields.forEach((field, index) => {
+        const td = document.createElement('td');
+        
+        switch(field.key) {
+            case 'no':
+                td.textContent = data.id;
+                td.style.fontWeight = '600';
+                td.style.textAlign = 'center';
+                break;
+                
+            case 'product':
+            case 'sku':
+            case 'section':
+            case 'oprt':
+                const input = createInput(field.key, data[field.key], data.id);
+                td.appendChild(input);
+                break;
+                
+            case 'process':
+            case 'mte':
+            case 'workUnit':
+            case 'remarks':
+                const div = document.createElement('div');
+                div.className = 'input-field input-clickable';
+                const placeholder = `Click to add ${field.key}...`;
+                div.textContent = data[field.key] || placeholder;
+                div.onclick = () => openModal(field.key, data.id, data[field.key]);
+                td.appendChild(div);
+                break;
+                
+            case 'action':
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = '✕';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = () => deleteRow(data.id);
+                td.appendChild(deleteBtn);
+                break;
+        }
+        
+        entryGroup.appendChild(td);
+    });
     
-    // Section
-    const tdSection = document.createElement('td');
-    const sectionInput = createInput('section', data.section, data.id);
-    tdSection.appendChild(sectionInput);
-    tr.appendChild(tdSection);
+    tbody.appendChild(entryGroup);
     
-    // Process - Clickable to open modal
-    const tdProcess = document.createElement('td');
-    const processDiv = document.createElement('div');
-    processDiv.className = 'input-field input-clickable';
-    processDiv.textContent = data.process || 'Click to add process...';
-    processDiv.style.overflow = 'hidden';
-    processDiv.style.textOverflow = 'ellipsis';
-    processDiv.style.whiteSpace = 'nowrap';
-    processDiv.style.maxWidth = '120px';
-    processDiv.onclick = () => openModal('process', data.id, data.process);
-    tdProcess.appendChild(processDiv);
-    tr.appendChild(tdProcess);
+    // Row 2: Time fields (Start Time, End Time, Paused Time)
+    const timeRow = document.createElement('tr');
+    timeRow.className = 'time-row';
+    timeRow.id = `time-${data.id}`;
+    timeRow.dataset.id = data.id;
     
-    // Oprt
-    const tdOprt = document.createElement('td');
-    const oprtInput = createInput('oprt', data.oprt, data.id);
-    tdOprt.appendChild(oprtInput);
-    tr.appendChild(tdOprt);
+    // Create empty cells for No. (colspan handled by using first cell)
+    const emptyTd = document.createElement('td');
+    timeRow.appendChild(emptyTd);
     
-    // MTE
-    const tdMte = document.createElement('td');
-    const mteInput = createInput('mte', data.mte, data.id);
-    tdMte.appendChild(mteInput);
-    tr.appendChild(tdMte);
+    // Time container spanning from Product to Work Unit (columns 2-8)
+    const timeTd = document.createElement('td');
+    timeTd.colSpan = 8;
+    timeTd.style.padding = '4px 3px';
     
-    // Work Unit
-    const tdWorkUnit = document.createElement('td');
-    const workUnitInput = createInput('workUnit', data.workUnit, data.id);
-    tdWorkUnit.appendChild(workUnitInput);
-    tr.appendChild(tdWorkUnit);
+    const timeContainer = document.createElement('div');
+    timeContainer.className = 'time-container';
     
     // Start Time
-    const tdStartTime = document.createElement('td');
-    tdStartTime.textContent = data.startTime || '--:--:--';
-    tdStartTime.className = 'time-display';
-    tdStartTime.id = `startTime-${data.id}`;
-    tr.appendChild(tdStartTime);
+    const startTimeItem = document.createElement('div');
+    startTimeItem.className = 'time-item';
+    startTimeItem.innerHTML = `
+        <div class="time-label">Start</div>
+        <div class="time-display" id="startTime-${data.id}">${data.startTime || '--:--:--'}</div>
+    `;
+    timeContainer.appendChild(startTimeItem);
     
     // End Time
-    const tdEndTime = document.createElement('td');
-    tdEndTime.id = `endTime-${data.id}`;
-    
-    const endTimeContainer = document.createElement('div');
-    endTimeContainer.style.display = 'flex';
-    endTimeContainer.style.flexDirection = 'column';
-    endTimeContainer.style.gap = '2px';
-    
-    const endTimeDisplay = document.createElement('div');
-    endTimeDisplay.textContent = data.endTime || '--:--:--';
-    endTimeDisplay.className = 'time-display';
-    endTimeDisplay.id = `endTimeDisplay-${data.id}`;
-    endTimeContainer.appendChild(endTimeDisplay);
-    
-    const buttonContainer = document.createElement('div');
-    buttonContainer.style.display = 'flex';
-    buttonContainer.style.gap = '2px';
-    
-    const stopBtn = document.createElement('button');
-    stopBtn.textContent = 'Stop';
-    stopBtn.className = 'btn-table btn-stop';
-    stopBtn.onclick = () => stopTimer(data.id);
-    buttonContainer.appendChild(stopBtn);
-    
-    const pauseBtn = document.createElement('button');
-    pauseBtn.textContent = data.isPaused ? 'Resume' : 'Pause';
-    pauseBtn.className = `btn-table ${data.isPaused ? 'btn-resume' : 'btn-pause'}`;
-    pauseBtn.onclick = () => togglePause(data.id);
-    buttonContainer.appendChild(pauseBtn);
-    
-    endTimeContainer.appendChild(buttonContainer);
-    tdEndTime.appendChild(endTimeContainer);
-    tr.appendChild(tdEndTime);
+    const endTimeItem = document.createElement('div');
+    endTimeItem.className = 'time-item';
+    endTimeItem.innerHTML = `
+        <div class="time-label">End</div>
+        <div class="time-display" id="endTimeDisplay-${data.id}">${data.endTime || '--:--:--'}</div>
+    `;
+    timeContainer.appendChild(endTimeItem);
     
     // Paused Time
-    const tdPaused = document.createElement('td');
-    const pausedDisplay = document.createElement('div');
-    pausedDisplay.className = 'paused-display';
-    pausedDisplay.id = `pausedDisplay-${data.id}`;
-    pausedDisplay.textContent = formatPausedTime(data.pausedTime || 0);
-    tdPaused.appendChild(pausedDisplay);
-    tr.appendChild(tdPaused);
+    const pausedTimeItem = document.createElement('div');
+    pausedTimeItem.className = 'time-item';
+    pausedTimeItem.innerHTML = `
+        <div class="time-label">Paused</div>
+        <div class="paused-display" id="pausedDisplay-${data.id}">${formatPausedTime(data.pausedTime || 0)}</div>
+    `;
+    timeContainer.appendChild(pausedTimeItem);
     
-    // Remarks - Clickable to open modal
-    const tdRemarks = document.createElement('td');
-    const remarksDiv = document.createElement('div');
-    remarksDiv.className = 'input-field input-clickable';
-    remarksDiv.textContent = data.remarks || 'Click to add remarks...';
-    remarksDiv.style.overflow = 'hidden';
-    remarksDiv.style.textOverflow = 'ellipsis';
-    remarksDiv.style.whiteSpace = 'nowrap';
-    remarksDiv.style.maxWidth = '120px';
-    remarksDiv.onclick = () => openModal('remarks', data.id, data.remarks);
-    tdRemarks.appendChild(remarksDiv);
-    tr.appendChild(tdRemarks);
+    // Action buttons for time
+    const actionItem = document.createElement('div');
+    actionItem.className = 'time-item';
+    actionItem.style.minWidth = '70px';
+    actionItem.innerHTML = `
+        <div class="time-label">Actions</div>
+        <div style="display: flex; gap: 2px; width: 100%;">
+            <button class="btn-table btn-stop" onclick="stopTimer(${data.id})">Stop</button>
+            <button class="btn-table ${data.isPaused ? 'btn-resume' : 'btn-pause'}" onclick="togglePause(${data.id})">
+                ${data.isPaused ? 'Resume' : 'Pause'}
+            </button>
+        </div>
+    `;
+    timeContainer.appendChild(actionItem);
     
-    // Action
-    const tdAction = document.createElement('td');
-    const deleteBtn = document.createElement('button');
-    deleteBtn.textContent = '✕';
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.onclick = () => deleteRow(data.id);
-    tdAction.appendChild(deleteBtn);
-    tr.appendChild(tdAction);
+    timeTd.appendChild(timeContainer);
+    timeRow.appendChild(timeTd);
     
-    tbody.appendChild(tr);
+    // Empty cell for Remarks (colspan handled)
+    const emptyTd2 = document.createElement('td');
+    timeRow.appendChild(emptyTd2);
+    
+    // Empty cell for Action
+    const emptyTd3 = document.createElement('td');
+    timeRow.appendChild(emptyTd3);
+    
+    tbody.appendChild(timeRow);
     
     // If it was paused, restart the timer
     if (data.isPaused && !data.isStopped) {
@@ -243,7 +255,6 @@ function createInput(field, value, rowId) {
     input.placeholder = field.charAt(0).toUpperCase() + field.slice(1);
     input.onchange = (e) => updateRowData(rowId, field, e.target.value);
     input.oninput = (e) => {
-        // Auto-save on input
         updateRowData(rowId, field, e.target.value);
     };
     return input;
@@ -313,9 +324,8 @@ function saveModalText() {
     // Update display in table
     const row = rows.find(r => r.id === rowId);
     if (row) {
-        const rowElement = document.getElementById(`row-${rowId}`);
+        const rowElement = document.getElementById(`entry-${rowId}`);
         if (rowElement) {
-            // Find the correct cell based on field
             const cells = rowElement.querySelectorAll('td');
             const fieldIndex = {
                 'product': 1,
@@ -325,23 +335,15 @@ function saveModalText() {
                 'oprt': 5,
                 'mte': 6,
                 'workUnit': 7,
-                'remarks': 11
+                'remarks': 8
             };
             
             const index = fieldIndex[field];
             if (index !== undefined && cells[index]) {
-                // Check if it's a clickable div (process or remarks) or input field
                 const clickableDiv = cells[index].querySelector('.input-clickable');
                 if (clickableDiv) {
-                    // For Process and Remarks fields
-                    const placeholder = field === 'process' ? 'Click to add process...' : 'Click to add remarks...';
+                    const placeholder = `Click to add ${field}...`;
                     clickableDiv.textContent = value || placeholder;
-                } else {
-                    // For regular input fields
-                    const input = cells[index].querySelector('.input-field');
-                    if (input) {
-                        input.value = value;
-                    }
                 }
             }
         }
@@ -377,13 +379,15 @@ function stopTimer(rowId) {
     document.getElementById(`endTimeDisplay-${rowId}`).textContent = timeStr;
     
     // Update button states
-    const rowElement = document.getElementById(`row-${rowId}`);
-    const buttons = rowElement.querySelectorAll('.btn-table');
-    buttons.forEach(btn => {
-        btn.disabled = true;
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
-    });
+    const timeRow = document.getElementById(`time-${rowId}`);
+    if (timeRow) {
+        const buttons = timeRow.querySelectorAll('.btn-table');
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            btn.style.cursor = 'not-allowed';
+        });
+    }
     
     // Update paused time display
     const pausedDisplay = document.getElementById(`pausedDisplay-${rowId}`);
@@ -397,8 +401,8 @@ function togglePause(rowId) {
     const row = rows.find(r => r.id === rowId);
     if (!row || row.isStopped) return;
     
-    const rowElement = document.getElementById(`row-${rowId}`);
-    const pauseBtn = rowElement.querySelector('.btn-table.btn-pause, .btn-table.btn-resume');
+    const timeRow = document.getElementById(`time-${rowId}`);
+    const pauseBtn = timeRow.querySelector('.btn-table.btn-pause, .btn-table.btn-resume');
     
     if (row.isPaused) {
         // Resume
@@ -463,10 +467,10 @@ function deleteRow(rowId) {
         }
         
         rows = rows.filter(r => r.id !== rowId);
-        const rowElement = document.getElementById(`row-${rowId}`);
-        if (rowElement) {
-            rowElement.remove();
-        }
+        const entryRow = document.getElementById(`entry-${rowId}`);
+        const timeRow = document.getElementById(`time-${rowId}`);
+        if (entryRow) entryRow.remove();
+        if (timeRow) timeRow.remove();
         saveData();
         renumberRows();
     }
@@ -475,10 +479,9 @@ function deleteRow(rowId) {
 // Renumber rows
 function renumberRows() {
     const tbody = document.getElementById('tableBody');
-    const rowElements = tbody.querySelectorAll('tr');
-    const sortedRows = rows.sort((a, b) => a.id - b.id);
+    const entryRows = tbody.querySelectorAll('tr.entry-row');
     
-    rowElements.forEach((row, index) => {
+    entryRows.forEach((row, index) => {
         const tdNo = row.querySelector('td:first-child');
         if (tdNo) {
             tdNo.textContent = index + 1;
@@ -489,6 +492,11 @@ function renumberRows() {
             rowData.id = index + 1;
         }
         row.dataset.id = index + 1;
+        // Update corresponding time row
+        const timeRow = document.getElementById(`time-${rowId}`);
+        if (timeRow) {
+            timeRow.dataset.id = index + 1;
+        }
     });
     rowCounter = rows.length;
     saveData();
@@ -540,7 +548,7 @@ function exportCSV() {
     });
     
     const csvString = csvRows.join('\n');
-    const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' }); // Add BOM for Excel
+    const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
@@ -619,13 +627,10 @@ window.addEventListener('beforeunload', () => {
 // Handle visibility change to keep timers accurate
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        // Page is hidden, save data
         saveData();
     } else {
-        // Page is visible again, update timers
         rows.forEach(row => {
             if (row.isPaused && !row.isStopped && row.pauseStartTime) {
-                // Restart pause timer if needed
                 startPauseTimer(row.id);
             }
         });
