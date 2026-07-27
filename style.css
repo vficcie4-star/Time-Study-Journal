@@ -116,7 +116,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.75rem;
-    min-width: 900px;
+    min-width: 600px;
 }
 
 #journalTable thead {
@@ -125,36 +125,57 @@ body {
 }
 
 #journalTable th {
-    padding: 10px 6px;
+    padding: 8px 4px;
     text-align: left;
     font-weight: 600;
     white-space: nowrap;
     position: sticky;
     top: 0;
     z-index: 10;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
 }
 
 #journalTable td {
-    padding: 6px 4px;
+    padding: 4px 3px;
     border-bottom: 1px solid #e0e0e0;
     vertical-align: middle;
 }
 
-#journalTable tbody tr:hover {
-    background: #f5f5f5;
+/* Entry row styling */
+.entry-row {
+    background: white;
+}
+
+.entry-row td {
+    padding: 4px 3px;
+    border-bottom: none;
+}
+
+.time-row {
+    background: #f8f9fa;
+}
+
+.time-row td {
+    padding: 4px 3px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.entry-group {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 4px;
 }
 
 /* Input Fields */
 .input-field {
     width: 100%;
-    padding: 6px 4px;
+    padding: 4px 3px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     background: transparent;
     transition: all 0.3s;
-    min-width: 50px;
+    min-width: 40px;
 }
 
 .input-field:focus {
@@ -163,48 +184,81 @@ body {
     background: white;
 }
 
-.input-field-sm {
-    padding: 4px 3px;
-    font-size: 0.65rem;
-}
-
 .input-clickable {
     cursor: pointer;
     background: #fafafa;
+    padding: 4px 6px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    min-height: 24px;
+    transition: all 0.3s ease;
+    font-size: 0.65rem;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80px;
 }
 
 .input-clickable:hover {
-    background: #f0f0f0;
-    border-color: #bbb;
+    background: #f0f7ff;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
 }
 
 .input-clickable:active {
-    background: #e8e8e8;
+    background: #e3f2fd;
+    transform: scale(0.98);
 }
 
 /* Time Display */
 .time-display {
     font-family: 'Courier New', monospace;
     font-weight: 600;
-    font-size: 0.7rem;
-    padding: 4px;
+    font-size: 0.65rem;
+    padding: 3px 4px;
     background: #f5f5f5;
     border-radius: 4px;
     white-space: nowrap;
+    text-align: center;
+}
+
+.time-container {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.time-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 60px;
+}
+
+.time-label {
+    font-size: 0.5rem;
+    color: #666;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Buttons in table */
 .btn-table {
-    padding: 4px 8px;
+    padding: 3px 6px;
     border: none;
     border-radius: 4px;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     color: white;
     margin: 1px 0;
     width: 100%;
+    min-width: 40px;
 }
 
 .btn-table:active {
@@ -233,9 +287,9 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 0.7rem;
+    width: 22px;
+    height: 22px;
+    font-size: 0.6rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -253,11 +307,47 @@ body {
 .paused-display {
     font-family: 'Courier New', monospace;
     font-weight: 600;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     text-align: center;
     background: #FFF3E0;
     padding: 2px 4px;
     border-radius: 4px;
+    min-width: 50px;
+}
+
+/* Add button at bottom of table */
+.add-bottom-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.add-bottom-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+.add-bottom-btn:active {
+    transform: scale(0.98);
+}
+
+#tableFooter {
+    background: #f8f9fa;
+}
+
+#tableFooter td {
+    padding: 10px !important;
+    border-top: 2px solid #e0e0e0;
 }
 
 /* Modal Styles */
@@ -356,7 +446,7 @@ body {
     }
 }
 
-/* Responsive Design */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .app-container {
         padding: 5px;
@@ -379,97 +469,70 @@ body {
 
     #journalTable {
         font-size: 0.65rem;
-        min-width: 700px;
+        min-width: 500px;
     }
 
     #journalTable th {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
         padding: 6px 3px;
     }
 
     #journalTable td {
-        padding: 4px 2px;
+        padding: 3px 2px;
     }
 
     .input-field {
-        font-size: 0.6rem;
-        padding: 4px 2px;
-        min-width: 40px;
+        font-size: 0.55rem;
+        padding: 3px 2px;
+        min-width: 30px;
+    }
+
+    .input-clickable {
+        font-size: 0.55rem;
+        padding: 3px 4px;
+        min-height: 20px;
+        max-width: 60px;
     }
 
     .time-display {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
+        padding: 2px 3px;
     }
 
     .btn-table {
         font-size: 0.5rem;
-        padding: 3px 5px;
+        padding: 2px 4px;
+        min-width: 30px;
     }
 
     .delete-btn {
-        width: 20px;
-        height: 20px;
-        font-size: 0.6rem;
+        width: 18px;
+        height: 18px;
+        font-size: 0.5rem;
     }
 
     .paused-display {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
+        min-width: 40px;
+    }
+
+    .time-item {
+        min-width: 50px;
+    }
+
+    .time-label {
+        font-size: 0.45rem;
+    }
+
+    .add-bottom-btn {
+        padding: 12px;
+        font-size: 0.85rem;
     }
 
     .modal-content {
         max-width: 100%;
         margin: 10px;
         max-height: 95vh;
-    }
-
-    .modal-header {
-        padding: 16px 20px 12px;
-    }
-
-    .modal-body {
-        padding: 16px 20px;
-    }
-
-    .modal-header h3 {
-        font-size: 1rem;
-    }
-
-    .btn-sm {
-        padding: 6px 12px;
-        font-size: 0.7rem;
-    }
-
-    #modalTextArea {
-        font-size: 0.95rem;
-        min-height: 120px;
-    }
-}
-
-@media (max-width: 480px) {
-    .current-time {
-        font-size: 1.8rem;
-    }
-
-    .btn {
-        font-size: 0.6rem;
-        padding: 8px 4px;
-        min-width: 50px;
-    }
-
-    #journalTable {
-        font-size: 0.55rem;
-        min-width: 600px;
-    }
-
-    #journalTable th {
-        font-size: 0.5rem;
-        padding: 4px 2px;
-    }
-
-    .input-field {
-        font-size: 0.55rem;
-        padding: 3px 2px;
-        min-width: 35px;
     }
 
     .modal-header {
@@ -480,10 +543,78 @@ body {
         padding: 12px 16px;
     }
 
+    .modal-header h3 {
+        font-size: 0.95rem;
+    }
+
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 0.65rem;
+    }
+
     #modalTextArea {
         font-size: 0.9rem;
-        min-height: 100px;
+        min-height: 120px;
         padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .current-time {
+        font-size: 1.6rem;
+    }
+
+    .btn {
+        font-size: 0.6rem;
+        padding: 8px 4px;
+        min-width: 50px;
+    }
+
+    #journalTable {
+        font-size: 0.55rem;
+        min-width: 400px;
+    }
+
+    #journalTable th {
+        font-size: 0.45rem;
+        padding: 4px 2px;
+    }
+
+    .input-field {
+        font-size: 0.5rem;
+        padding: 2px 2px;
+        min-width: 25px;
+    }
+
+    .input-clickable {
+        font-size: 0.5rem;
+        padding: 2px 3px;
+        min-height: 18px;
+        max-width: 50px;
+    }
+
+    .time-display {
+        font-size: 0.5rem;
+        padding: 2px 2px;
+    }
+
+    .btn-table {
+        font-size: 0.45rem;
+        padding: 2px 3px;
+        min-width: 25px;
+    }
+
+    .time-item {
+        min-width: 40px;
+    }
+
+    .time-label {
+        font-size: 0.4rem;
+    }
+
+    .add-bottom-btn {
+        padding: 10px;
+        font-size: 0.75rem;
     }
 }
 
@@ -518,125 +649,4 @@ body {
 .modal-body::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
-}
-/* Enhanced clickable fields */
-.input-clickable {
-    cursor: pointer;
-    background: #fafafa;
-    padding: 6px 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    min-height: 30px;
-    transition: all 0.3s ease;
-    font-size: 0.7rem;
-    color: #333;
-}
-
-.input-clickable:hover {
-    background: #f0f7ff;
-    border-color: #2196F3;
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
-}
-
-.input-clickable:active {
-    background: #e3f2fd;
-    transform: scale(0.98);
-}
-
-.input-clickable.has-value {
-    background: #f5f5f5;
-    border-color: #bbb;
-    font-weight: 500;
-}
-
-/* Empty state styling */
-.input-clickable:empty::before,
-.input-clickable:not(:has(text)):empty::before {
-    content: attr(data-placeholder);
-    color: #999;
-    font-style: italic;
-    font-weight: 400;
-}
-
-/* Mobile optimization for clickable fields */
-@media (max-width: 768px) {
-    .input-clickable {
-        padding: 8px 6px;
-        font-size: 0.65rem;
-        min-height: 36px;
-    }
-}
-/* Add button at bottom of table */
-.add-bottom-btn {
-    width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #2196F3, #1976D2);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
-}
-
-.add-bottom-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-}
-
-.add-bottom-btn:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
-}
-
-/* Table footer styling */
-#tableFooter {
-    background: #f8f9fa;
-}
-
-#tableFooter td {
-    padding: 10px !important;
-    border-top: 2px solid #e0e0e0;
-}
-
-/* Sticky footer for better UX on mobile */
-@media (max-width: 768px) {
-    .add-bottom-btn {
-        padding: 16px;
-        font-size: 0.9rem;
-        border-radius: 8px;
-    }
-    
-    #tableFooter td {
-        padding: 8px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .add-bottom-btn {
-        padding: 14px;
-        font-size: 0.8rem;
-    }
-}
-
-/* Remove the old action-buttons styling for add button since it's moved */
-.action-buttons {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-/* Adjust action buttons for mobile */
-@media (max-width: 768px) {
-    .action-buttons .btn {
-        flex: 1;
-        min-width: 60px;
-        padding: 10px 5px;
-        font-size: 0.7rem;
-    }
 }
