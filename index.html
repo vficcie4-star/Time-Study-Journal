@@ -20,8 +20,8 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-            <button id="clearHistoryBtn" class="btn btn-danger">🗑 Clear</button>
-            <button id="exportCSVBtn" class="btn btn-success">📊 Export</button>
+            <button id="clearHistoryBtn" class="btn btn-danger">Clear History</button>
+            <button id="exportCSVBtn" class="btn btn-success">Export CSV</button>
         </div>
 
         <!-- Table Container -->
@@ -29,16 +29,13 @@
             <table id="journalTable">
                 <thead>
                     <tr>
-                        <th style="min-width: 35px;">#</th>
-                        <th style="min-width: 60px;">Product</th>
-                        <th style="min-width: 50px;">SKU</th>
-                        <th style="min-width: 60px;">Section</th>
-                        <th style="min-width: 70px;">Process</th>
-                        <th style="min-width: 45px;">Oprt</th>
-                        <th style="min-width: 50px;">MTE</th>
-                        <th style="min-width: 65px;">Work Unit</th>
-                        <th style="min-width: 70px;">Remarks</th>
-                        <th style="min-width: 35px;"></th>
+                        <th>No.</th>
+                        <th>Product</th>
+                        <th>Process</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Paused Time</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -47,8 +44,8 @@
                 <!-- Footer with Add Time button -->
                 <tfoot id="tableFooter">
                     <tr>
-                        <td colspan="10" style="padding: 12px;">
-                            <button id="addRowBtn" class="btn btn-primary add-bottom-btn">➕ Add Time</button>
+                        <td colspan="7" style="padding: 10px;">
+                            <button id="addRowBtn" class="btn btn-primary add-bottom-btn">+ Add Time</button>
                         </td>
                     </tr>
                 </tfoot>
@@ -56,18 +53,45 @@
         </div>
     </div>
 
-    <!-- Modal for text input -->
-    <div id="textModal" class="modal">
+    <!-- Modal for Product Details -->
+    <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Enter Text</h3>
+                <h3 id="productModalTitle">Product Details</h3>
                 <div class="modal-actions">
-                    <button id="modalCancelBtn" class="btn btn-danger btn-sm">Cancel</button>
-                    <button id="modalDoneBtn" class="btn btn-primary btn-sm">Done</button>
+                    <button id="productModalCancelBtn" class="btn btn-danger btn-sm">Cancel</button>
+                    <button id="productModalDoneBtn" class="btn btn-primary btn-sm">Done</button>
                 </div>
             </div>
             <div class="modal-body">
-                <textarea id="modalTextArea" rows="8" placeholder="Type here..."></textarea>
+                <div class="form-group">
+                    <label>Product</label>
+                    <input type="text" id="modalProduct" class="modal-input" placeholder="Enter Product">
+                </div>
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" id="modalSKU" class="modal-input" placeholder="Enter SKU">
+                </div>
+                <div class="form-group">
+                    <label>Section</label>
+                    <input type="text" id="modalSection" class="modal-input" placeholder="Enter Section">
+                </div>
+                <div class="form-group">
+                    <label>Process</label>
+                    <textarea id="modalProcess" class="modal-textarea" rows="3" placeholder="Enter Process"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Oprt</label>
+                    <input type="text" id="modalOprt" class="modal-input" placeholder="Enter Oprt">
+                </div>
+                <div class="form-group">
+                    <label>MTE</label>
+                    <input type="text" id="modalMTE" class="modal-input" placeholder="Enter MTE">
+                </div>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <textarea id="modalRemarks" class="modal-textarea" rows="3" placeholder="Enter Remarks"></textarea>
+                </div>
             </div>
         </div>
     </div>
