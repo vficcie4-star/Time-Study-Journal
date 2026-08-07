@@ -14,7 +14,7 @@ body {
 
 .app-container {
     max-width: 100vw;
-    padding: 10px;
+    padding: 8px;
     margin: 0 auto;
     padding-bottom: 80px;
 }
@@ -23,9 +23,9 @@ body {
 .header {
     background: linear-gradient(135deg, #2196F3, #1976D2);
     color: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
@@ -33,18 +33,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
 }
 
 .current-time {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     letter-spacing: 2px;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .current-date {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 500;
     opacity: 0.9;
 }
@@ -52,18 +52,18 @@ body {
 /* Action Buttons */
 .action-buttons {
     display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: 6px;
+    margin-bottom: 10px;
     flex-wrap: wrap;
 }
 
 .btn {
     flex: 1;
-    min-width: 80px;
-    padding: 12px 8px;
+    min-width: 60px;
+    padding: 8px 5px;
     border: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -88,9 +88,17 @@ body {
     background: #4CAF50;
 }
 
+.btn-warning {
+    background: #FF9800;
+}
+
+.btn-info {
+    background: #00BCD4;
+}
+
 .btn-sm {
-    padding: 8px 16px;
-    font-size: 0.8rem;
+    padding: 6px 12px;
+    font-size: 0.7rem;
     min-width: auto;
     flex: none;
 }
@@ -98,7 +106,7 @@ body {
 /* Table Styles */
 .table-container {
     background: white;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow-x: auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     -webkit-overflow-scrolling: touch;
@@ -107,8 +115,8 @@ body {
 #journalTable {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
-    min-width: 600px;
+    font-size: 0.7rem;
+    min-width: 480px;
 }
 
 #journalTable thead {
@@ -117,69 +125,70 @@ body {
 }
 
 #journalTable th {
-    padding: 10px 8px;
+    padding: 6px 4px;
     text-align: left;
     font-weight: 600;
     white-space: nowrap;
     position: sticky;
     top: 0;
     z-index: 10;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
 }
 
 #journalTable td {
-    padding: 8px 6px;
+    padding: 4px 3px;
     border-bottom: 1px solid #e0e0e0;
     vertical-align: middle;
 }
 
-#journalTable tbody tr:hover {
-    background: #f5f5f5;
+#journalTable tbody tr {
+    cursor: grab;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    touch-action: none;
 }
 
-/* Clickable Product Cell */
+#journalTable tbody tr:active {
+    cursor: grabbing;
+}
+
+#journalTable tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Product and Process cells */
 .product-cell {
-    cursor: pointer;
-    color: #1976D2;
     font-weight: 500;
-    padding: 6px 8px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    min-height: 30px;
-    display: flex;
-    align-items: center;
+    color: #1976D2;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.65rem;
 }
 
 .product-cell:hover {
     background: #e3f2fd;
-    text-decoration: underline;
 }
 
 .product-cell:active {
     background: #bbdefb;
-    transform: scale(0.98);
 }
 
-.product-cell.has-value {
-    font-weight: 600;
-}
-
-.product-cell.empty {
-    color: #999;
-    font-style: italic;
-    font-weight: 400;
-}
-
-/* Process Cell */
 .process-cell {
-    max-width: 120px;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    cursor: pointer;
-    padding: 6px 8px;
-    border-radius: 4px;
-    transition: all 0.3s ease;
+    color: #333;
+    font-size: 0.65rem;
 }
 
 .process-cell:hover {
@@ -190,31 +199,39 @@ body {
     background: #e8e8e8;
 }
 
+.product-cell.empty,
+.process-cell.empty {
+    color: #999;
+    font-style: italic;
+}
+
 /* Time Display */
 .time-display {
     font-family: 'Courier New', monospace;
     font-weight: 600;
-    font-size: 0.8rem;
-    padding: 4px 6px;
+    font-size: 0.6rem;
+    padding: 2px 4px;
     background: #f5f5f5;
-    border-radius: 4px;
+    border-radius: 3px;
     white-space: nowrap;
     display: inline-block;
-    min-width: 70px;
+    min-width: 55px;
+    text-align: center;
 }
 
 /* Buttons in table */
 .btn-table {
-    padding: 4px 10px;
+    padding: 2px 6px;
     border: none;
-    border-radius: 4px;
-    font-size: 0.65rem;
+    border-radius: 3px;
+    font-size: 0.5rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     color: white;
-    margin: 1px 2px;
-    min-width: 50px;
+    margin: 1px 0;
+    min-width: 30px;
+    white-space: nowrap;
 }
 
 .btn-table:active {
@@ -233,8 +250,10 @@ body {
     background: #4CAF50;
 }
 
-.btn-delete {
-    background: #9E9E9E;
+.btn-edit {
+    background: #2196F3;
+    padding: 2px 4px;
+    font-size: 0.5rem;
 }
 
 /* Delete button */
@@ -243,14 +262,15 @@ body {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    font-size: 0.8rem;
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
     cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s;
+    margin: 0 auto;
 }
 
 .delete-btn:active {
@@ -262,13 +282,116 @@ body {
 .paused-display {
     font-family: 'Courier New', monospace;
     font-weight: 600;
-    font-size: 0.7rem;
+    font-size: 0.55rem;
     text-align: center;
     background: #FFF3E0;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 1px 4px;
+    border-radius: 3px;
     display: inline-block;
-    min-width: 60px;
+    min-width: 50px;
+}
+
+/* Action column */
+.action-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+}
+
+.action-cell .btn-table {
+    width: 100%;
+    min-width: 30px;
+}
+
+/* Row dragging states */
+#tableBody tr.dragging {
+    opacity: 0.3;
+    transform: scale(0.98);
+}
+
+#tableBody tr.drag-over {
+    border-bottom: 2px solid #2196F3;
+    background: #e3f2fd;
+}
+
+#tableBody tr.drag-over-top {
+    border-top: 2px solid #2196F3;
+    background: #e3f2fd;
+}
+
+#tableBody tr.drag-source {
+    opacity: 0.2;
+}
+
+/* Drag clone */
+#drag-clone {
+    position: fixed !important;
+    pointer-events: none !important;
+    z-index: 10000 !important;
+    opacity: 0.9 !important;
+    transform: scale(1.02) rotate(-1deg) !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3) !important;
+    border-radius: 8px !important;
+    background: white !important;
+    width: auto !important;
+    min-width: 300px !important;
+}
+
+#drag-clone td {
+    padding: 6px 4px !important;
+}
+
+/* Drag indicator */
+.drag-indicator {
+    display: none;
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    color: #2196F3;
+    opacity: 0.6;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+}
+
+.drag-indicator.active {
+    display: block;
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+}
+
+/* Add button at bottom */
+.add-bottom-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.add-bottom-btn:active {
+    transform: scale(0.98);
+}
+
+#tableFooter {
+    background: #f8f9fa;
+}
+
+#tableFooter td {
+    padding: 8px !important;
+    border-top: 2px solid #e0e0e0;
 }
 
 /* Modal Styles */
@@ -289,12 +412,12 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 15px;
 }
 
 .modal-content {
     background: white;
-    border-radius: 16px;
+    border-radius: 14px;
     width: 100%;
     max-width: 500px;
     max-height: 90vh;
@@ -305,17 +428,17 @@ body {
 }
 
 .modal-header {
-    padding: 20px 24px 16px;
+    padding: 14px 18px 12px;
     border-bottom: 1px solid #e0e0e0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .modal-header h3 {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: #333;
     margin: 0;
@@ -323,95 +446,318 @@ body {
 
 .modal-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .modal-body {
-    padding: 20px 24px;
+    padding: 14px 18px;
     flex: 1;
     overflow-y: auto;
 }
 
-/* Form Groups */
+/* Form Modal */
+.form-modal {
+    max-width: 480px;
+    max-height: 95vh;
+}
+
+.entry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .form-group {
-    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    position: relative;
 }
 
 .form-group label {
-    display: block;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: #555;
-    margin-bottom: 4px;
 }
 
-.modal-input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    transition: border-color 0.3s;
+.form-group input,
+.form-group textarea {
+    padding: 6px 10px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.85rem;
     font-family: inherit;
+    transition: border-color 0.3s;
+    width: 100%;
 }
 
-.modal-input:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
 }
 
-.modal-textarea {
+.form-group textarea {
+    resize: vertical;
+    min-height: 50px;
+}
+
+/* Notes Modal */
+.notes-modal {
+    max-width: 550px;
+    max-height: 95vh;
+}
+
+.notes-info {
+    padding: 6px 0 10px 0;
+    color: #666;
+    font-size: 0.75rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+#notesTextArea {
     width: 100%;
-    padding: 10px 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    padding: 12px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-family: inherit;
     resize: vertical;
     transition: border-color 0.3s;
-    min-height: 60px;
-    line-height: 1.6;
+    min-height: 250px;
+    line-height: 1.8;
+    background: #fafafa;
 }
 
-.modal-textarea:focus {
+#notesTextArea:focus {
     outline: none;
-    border-color: #2196F3;
+    border-color: #FF9800;
+    box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+    background: white;
 }
 
-/* Add button at bottom of table */
-.add-bottom-btn {
+.notes-word-count {
+    padding: 8px 0 4px 0;
+    color: #888;
+    font-size: 0.7rem;
+    text-align: right;
+    border-top: 1px solid #eee;
+    margin-top: 10px;
+}
+
+/* Count Modal Styles - Compact like main table */
+.count-modal {
+    max-width: 700px;
+    max-height: 95vh;
+}
+
+.count-info {
+    padding: 6px 0 10px 0;
+    color: #666;
+    font-size: 0.75rem;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.count-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.count-table {
     width: 100%;
-    padding: 14px;
-    font-size: 1rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    min-width: 500px;
+}
+
+.count-table thead {
+    background: #0097A7;
+    color: white;
+}
+
+.count-table th {
+    padding: 6px 4px;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: 0.6rem;
+}
+
+.count-table td {
+    padding: 4px 3px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: middle;
+}
+
+.count-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* Count transaction select */
+.count-transaction-select {
+    width: 100%;
+    min-width: 80px;
+    padding: 2px 4px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 0.6rem;
+    font-family: inherit;
+    background: white;
+}
+
+.count-transaction-select:focus {
+    outline: none;
+    border-color: #00BCD4;
+}
+
+/* Count value controls - compact */
+.count-value-control-compact {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.count-value-btn-compact {
+    width: 22px;
+    height: 22px;
     border: none;
-    border-radius: 8px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.count-value-btn-compact:active {
+    transform: scale(0.9);
+}
+
+.count-value-btn-compact.minus {
+    background: #f44336;
+    color: white;
+}
+
+.count-value-btn-compact.plus {
+    background: #4CAF50;
+    color: white;
+}
+
+.count-value-display-compact {
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 28px;
+    text-align: center;
+    color: #333;
+}
+
+/* Count time displays */
+.count-time-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 0.55rem;
+    padding: 2px 4px;
+    background: #f5f5f5;
+    border-radius: 3px;
+    white-space: nowrap;
+    display: inline-block;
+    min-width: 50px;
+    text-align: center;
+}
+
+.count-paused-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    font-size: 0.5rem;
+    text-align: center;
+    background: #FFF3E0;
+    padding: 1px 4px;
+    border-radius: 3px;
+    display: inline-block;
+    min-width: 45px;
+}
+
+/* Count timing buttons - compact */
+.count-timing-controls-compact {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+
+.count-timing-controls-compact .btn-count-timing {
+    padding: 2px 6px;
+    border: none;
+    border-radius: 3px;
+    font-size: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    transition: all 0.2s;
+    min-width: 30px;
+    white-space: nowrap;
+}
+
+.count-timing-controls-compact .btn-count-timing:active {
+    transform: scale(0.9);
+}
+
+.count-timing-controls-compact .btn-count-timing.stop {
+    background: #f44336;
+}
+
+.count-timing-controls-compact .btn-count-timing.pause {
+    background: #FF9800;
+}
+
+.count-timing-controls-compact .btn-count-timing.resume {
+    background: #4CAF50;
+}
+
+/* Count delete button */
+.count-delete-btn {
+    background: #9E9E9E;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 0.6rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin: 0 auto;
+}
+
+.count-delete-btn:active {
+    transform: scale(0.8);
+    background: #f44336;
+}
+
+/* Add count button */
+.add-count-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #00BCD4, #0097A7);
+    border: none;
+    border-radius: 6px;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+    letter-spacing: 0.5px;
 }
 
-.add-bottom-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
-}
-
-.add-bottom-btn:active {
+.add-count-btn:active {
     transform: scale(0.98);
-    box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
-}
-
-#tableFooter {
-    background: #f8f9fa;
-}
-
-#tableFooter td {
-    padding: 10px !important;
-    border-top: 2px solid #e0e0e0;
 }
 
 /* Animations */
@@ -431,121 +777,23 @@ body {
     }
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile First */
 @media (max-width: 768px) {
     .app-container {
-        padding: 5px;
+        padding: 4px;
         padding-bottom: 60px;
     }
 
     .current-time {
-        font-size: 2rem;
+        font-size: 1.6rem;
+    }
+
+    .current-date {
+        font-size: 0.75rem;
     }
 
     .action-buttons {
-        gap: 5px;
-    }
-
-    .btn {
-        font-size: 0.7rem;
-        padding: 10px 5px;
-        min-width: 60px;
-    }
-
-    #journalTable {
-        font-size: 0.7rem;
-        min-width: 500px;
-    }
-
-    #journalTable th {
-        font-size: 0.6rem;
-        padding: 6px 4px;
-    }
-
-    #journalTable td {
-        padding: 6px 4px;
-    }
-
-    .time-display {
-        font-size: 0.7rem;
-        min-width: 60px;
-        padding: 3px 4px;
-    }
-
-    .btn-table {
-        font-size: 0.55rem;
-        padding: 3px 6px;
-        min-width: 40px;
-    }
-
-    .delete-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 0.7rem;
-    }
-
-    .paused-display {
-        font-size: 0.65rem;
-        min-width: 50px;
-        padding: 3px 6px;
-    }
-
-    .product-cell {
-        font-size: 0.7rem;
-        padding: 4px 6px;
-    }
-
-    .process-cell {
-        font-size: 0.7rem;
-        max-width: 80px;
-    }
-
-    .modal-content {
-        max-width: 100%;
-        margin: 10px;
-        max-height: 95vh;
-    }
-
-    .modal-header {
-        padding: 16px 20px 12px;
-    }
-
-    .modal-body {
-        padding: 16px 20px;
-    }
-
-    .modal-header h3 {
-        font-size: 1rem;
-    }
-
-    .btn-sm {
-        padding: 6px 12px;
-        font-size: 0.7rem;
-    }
-
-    .modal-input, .modal-textarea {
-        font-size: 0.9rem;
-        padding: 8px 10px;
-    }
-
-    .form-group {
-        margin-bottom: 12px;
-    }
-
-    .add-bottom-btn {
-        padding: 16px;
-        font-size: 0.9rem;
-        border-radius: 8px;
-    }
-    
-    #tableFooter td {
-        padding: 8px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .current-time {
-        font-size: 1.8rem;
+        gap: 4px;
     }
 
     .btn {
@@ -565,97 +813,393 @@ body {
     }
 
     #journalTable td {
-        padding: 4px 3px;
-    }
-
-    .time-display {
-        font-size: 0.6rem;
-        min-width: 50px;
-        padding: 2px 3px;
-    }
-
-    .btn-table {
-        font-size: 0.5rem;
-        padding: 2px 4px;
-        min-width: 35px;
-    }
-
-    .delete-btn {
-        width: 22px;
-        height: 22px;
-        font-size: 0.6rem;
+        padding: 3px 2px;
     }
 
     .product-cell {
-        font-size: 0.6rem;
-        padding: 3px 4px;
+        max-width: 60px;
+        font-size: 0.55rem;
     }
 
     .process-cell {
-        font-size: 0.6rem;
-        max-width: 60px;
+        max-width: 70px;
+        font-size: 0.55rem;
+    }
+
+    .time-display {
+        font-size: 0.5rem;
+        min-width: 45px;
+        padding: 1px 3px;
+    }
+
+    .btn-table {
+        font-size: 0.45rem;
+        padding: 2px 4px;
+        min-width: 25px;
+    }
+
+    .delete-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 0.5rem;
+    }
+
+    .paused-display {
+        font-size: 0.5rem;
+        min-width: 40px;
+        padding: 1px 3px;
+    }
+
+    .modal-content {
+        max-width: 100%;
+        margin: 8px;
+        max-height: 95vh;
     }
 
     .modal-header {
-        padding: 12px 16px 10px;
+        padding: 12px 14px 10px;
     }
 
     .modal-body {
-        padding: 12px 16px;
+        padding: 12px 14px;
     }
 
-    .modal-input, .modal-textarea {
+    .modal-header h3 {
         font-size: 0.85rem;
-        padding: 6px 8px;
     }
 
-    .form-group {
-        margin-bottom: 10px;
+    .btn-sm {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.8rem;
+        padding: 5px 8px;
+    }
+
+    .form-group label {
+        font-size: 0.65rem;
     }
 
     .add-bottom-btn {
-        padding: 14px;
+        padding: 10px;
+        font-size: 0.75rem;
+    }
+
+    .action-cell {
+        gap: 1px;
+    }
+
+    #drag-clone {
+        min-width: 200px !important;
+    }
+    
+    #drag-clone td {
+        padding: 3px 3px !important;
+        font-size: 0.5rem !important;
+    }
+
+    #notesTextArea {
+        min-height: 180px;
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+
+    .count-modal {
+        max-width: 100%;
+    }
+
+    .count-table {
+        font-size: 0.6rem;
+        min-width: 420px;
+    }
+
+    .count-table th {
+        font-size: 0.5rem;
+        padding: 4px 3px;
+    }
+
+    .count-table td {
+        padding: 3px 2px;
+    }
+
+    .count-time-display {
+        font-size: 0.5rem;
+        min-width: 42px;
+        padding: 1px 3px;
+    }
+
+    .count-paused-display {
+        font-size: 0.45rem;
+        min-width: 38px;
+    }
+
+    .count-transaction-select {
+        font-size: 0.55rem;
+        min-width: 60px;
+        padding: 1px 3px;
+    }
+
+    .count-value-btn-compact {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+
+    .count-value-display-compact {
+        font-size: 0.75rem;
+        min-width: 24px;
+    }
+
+    .count-timing-controls-compact .btn-count-timing {
+        font-size: 0.45rem;
+        padding: 1px 4px;
+        min-width: 24px;
+    }
+
+    .count-delete-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .current-time {
+        font-size: 1.4rem;
+    }
+
+    .btn {
+        font-size: 0.55rem;
+        padding: 6px 3px;
+        min-width: 40px;
+    }
+
+    #journalTable {
+        font-size: 0.5rem;
+        min-width: 340px;
+    }
+
+    #journalTable th {
+        font-size: 0.45rem;
+        padding: 3px 2px;
+    }
+
+    #journalTable td {
+        padding: 2px 2px;
+    }
+
+    .product-cell {
+        max-width: 45px;
+        font-size: 0.5rem;
+    }
+
+    .process-cell {
+        max-width: 55px;
+        font-size: 0.5rem;
+    }
+
+    .time-display {
+        font-size: 0.45rem;
+        min-width: 38px;
+        padding: 1px 2px;
+    }
+
+    .btn-table {
+        font-size: 0.4rem;
+        padding: 1px 3px;
+        min-width: 20px;
+    }
+
+    .delete-btn {
+        width: 16px;
+        height: 16px;
+        font-size: 0.45rem;
+    }
+
+    .paused-display {
+        font-size: 0.45rem;
+        min-width: 35px;
+    }
+
+    .modal-header {
+        padding: 10px 12px 8px;
+    }
+
+    .modal-body {
+        padding: 10px 12px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.75rem;
+        padding: 4px 6px;
+    }
+
+    .add-bottom-btn {
+        padding: 8px;
+        font-size: 0.65rem;
+    }
+
+    #notesTextArea {
+        min-height: 150px;
         font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    #drag-clone {
+        min-width: 150px !important;
+    }
+
+    .count-table {
+        font-size: 0.5rem;
+        min-width: 360px;
+    }
+
+    .count-table th {
+        font-size: 0.45rem;
+        padding: 3px 2px;
+    }
+
+    .count-table td {
+        padding: 2px 2px;
+    }
+
+    .count-time-display {
+        font-size: 0.45rem;
+        min-width: 36px;
+        padding: 1px 2px;
+    }
+
+    .count-paused-display {
+        font-size: 0.4rem;
+        min-width: 32px;
+    }
+
+    .count-transaction-select {
+        font-size: 0.5rem;
+        min-width: 50px;
+        padding: 1px 2px;
+    }
+
+    .count-value-btn-compact {
+        width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+    }
+
+    .count-value-display-compact {
+        font-size: 0.7rem;
+        min-width: 20px;
+    }
+
+    .count-timing-controls-compact .btn-count-timing {
+        font-size: 0.4rem;
+        padding: 1px 3px;
+        min-width: 20px;
+    }
+
+    .count-delete-btn {
+        width: 16px;
+        height: 16px;
+        font-size: 0.45rem;
     }
 }
 
 /* Scrollbar Styling */
-.table-container::-webkit-scrollbar {
-    height: 6px;
+.table-container::-webkit-scrollbar,
+.count-table-container::-webkit-scrollbar {
+    height: 4px;
 }
 
-.table-container::-webkit-scrollbar-track {
+.table-container::-webkit-scrollbar-track,
+.count-table-container::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
-.table-container::-webkit-scrollbar-thumb {
+.table-container::-webkit-scrollbar-thumb,
+.count-table-container::-webkit-scrollbar-thumb {
     background: #888;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
-.table-container::-webkit-scrollbar-thumb:hover {
+.table-container::-webkit-scrollbar-thumb:hover,
+.count-table-container::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
 .modal-body::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .modal-body::-webkit-scrollbar-track {
     background: #f1f1f1;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
     background: #888;
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
-/* Action buttons container in table */
-.action-cell {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-    align-items: center;
+/* Suggestions */
+.suggestions-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    max-height: 120px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.suggestions-list.active {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.8rem;
+}
+
+.suggestion-item:hover {
+    background: #e3f2fd;
+}
+
+.suggestion-item:active {
+    background: #bbdefb;
+}
+
+.suggestion-item.highlighted {
+    background: #e3f2fd;
+}
+
+.suggestion-item .match-highlight {
+    font-weight: 700;
+    color: #1976D2;
+}
+
+@media (max-width: 768px) {
+    .suggestion-item {
+        padding: 8px 10px;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .suggestion-item {
+        padding: 10px 10px;
+        font-size: 0.7rem;
+    }
 }
